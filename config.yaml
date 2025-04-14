@@ -1,0 +1,34 @@
+# 钉钉机器人配置
+dingtalk:
+  webhook: "https://oapi.dingtalk.com/robot/send?access_token=2d0adfdb37a9cd21673c6c8919a06cb2f4586bdcfcd1cb1b9e635ec24b9b53e4"
+  secret: "SEC85e9e8c1a8392c305d12e34e844dc9739a628ace5532659680043ffc5f8cf714"
+
+# LeetCode用户配置
+leetcode:
+  minimum_solved: 3  # 最小解题数量要求
+  users:
+    - url: "https://leetcode.cn/u/kan-fan-xing/"
+      name: "宁赵星"
+    - url: "https://leetcode.cn/u/xun_xun/"
+      name: "蒋睿勋"
+    - url: "https://leetcode.cn/u/zao-an-e/"
+      name: "雪怡琦"
+    - url: "https://leetcode.cn/u/gui-tu-960/"
+      name: "方腾飞"
+    - url: "https://leetcode.cn/u/ding-mao-s/"
+      name: "田家杰"
+    - url: "https://leetcode.cn/u/trusting-6rothendieckqgx/"
+      name: "贺丽帆"
+    - url: "https://leetcode.cn/u/6oofy-gangulyxsi/"
+      name: "韩硕博"
+    - url: "https://leetcode.cn/u/practical-snyderqvy/"
+      name: "王怡晗"
+    - url: "https://leetcode.cn/u/hardcore-swirlesrz0/"
+      name: "王玉龙"
+    - url: "https://leetcode.cn/u/festive-i2ubinwnk/"
+      name: "李壮"
+  semester_start: "2025-02-17"
+
+ding_message:
+  header: "各位算法小能手注意查收本周战报~ \n ------✨本周战绩速览✨------"
+  bottom: "💡温馨提醒：\n 保持解题节奏就像打游戏签到领金币，连续登录会有惊喜加成哦~ 暂时落后的同学别着急，下周「补题buff」已生效！\n 代码不息，刷题不止 \n 我们下周同一时间，继续见证成长！( •̀ ω •́ )✧ \n  （有任何建议欢迎随时滴滴~）"
