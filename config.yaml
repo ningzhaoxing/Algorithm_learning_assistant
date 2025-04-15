@@ -6,7 +6,7 @@ dingtalk:
 # 数据库配置
 database:
   driver: "mysql"
-  host: "localhost"
+  host: "mysql"
   port: 3306
   username: "root"
   password: "123456"

@@ -26,6 +26,7 @@ FROM alpine:latest
 
 WORKDIR /app
 COPY --from=builder --chown=runner /app/al_learn_ass .
+COPY --chown=runner view/pages /app/view/pages
 COPY --chown=runner config.yaml .
 
 ENTRYPOINT ["/app/al_learn_ass"]
