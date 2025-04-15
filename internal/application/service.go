@@ -76,14 +76,12 @@ func (s *Service) Apply(obj string, websiteName string) {
 		user.Name = website.User.Name
 		users = append(users, *user)
 	}
-	fmt.Println(111111)
 
 	// 组装消息
 	msg, err := s.MessageProcessService.MessageAssembly(users, system)
 	if err != nil {
 		return
 	}
-	fmt.Println(msg)
 
 	// 发送消息
 	err = s.DingtalkService.SendMessage(msg)
