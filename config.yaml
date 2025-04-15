@@ -1,0 +1,17 @@
+# 钉钉机器人配置
+dingtalk:
+  webhook: "https://oapi.dingtalk.com/robot/send?access_token=2d0adfdb37a9cd21673c6c8919a06cb2f4586bdcfcd1cb1b9e635ec24b9b53e4"
+  secret: "SEC85e9e8c1a8392c305d12e34e844dc9739a628ace5532659680043ffc5f8cf714"
+
+# 数据库配置
+database:
+  driver: "mysql"
+  host: "localhost"
+  port: 3306
+  username: "root"
+  password: "123456"
+  name: "Algorithm_learning_assistant"
+
+app:
+  host: "0.0.0.0"
+  port: 8080
