@@ -1,4 +1,4 @@
-package service
+package dingtalk
 
 import (
 	"bytes"
@@ -8,19 +8,19 @@ import (
 	"encoding/json"
 	"fmt"
 	"getQuestionBot/internal/config"
-	"getQuestionBot/internal/interfaces"
+	"getQuestionBot/internal/service"
 	"net/http"
 	"time"
 )
 
-// DingTalkServiceImpl 实现MessageService接口
-type DingTalkServiceImpl struct {
+// ServiceImpl 实现MessageService接口
+type ServiceImpl struct {
 	config *config.Config
 }
 
-// NewDingTalkService 创建钉钉消息服务实例
-func NewDingTalkService(config *config.Config) interfaces.MessageService {
-	return &DingTalkServiceImpl{
+// NewServiceImpl 创建钉钉消息服务实例
+func NewServiceImpl(config *config.Config) service.DingtalkService {
+	return &ServiceImpl{
 		config: config,
 	}
 }
@@ -33,8 +33,8 @@ type DingTalkMessage struct {
 	} `json:"text"`
 }
 
-// calculateSignature 计算钉钉消息签名
-func calculateSignature(secret string, timestamp int64) string {
+// CalculateSignature 计算钉钉消息签名
+func CalculateSignature(secret string, timestamp int64) string {
 	strToSign := fmt.Sprintf("%d\n%s", timestamp, secret)
 	h := hmac.New(sha256.New, []byte(secret))
 	h.Write([]byte(strToSign))
@@ -42,7 +42,7 @@ func calculateSignature(secret string, timestamp int64) string {
 }
 
 // SendMessage 发送消息
-func (s *DingTalkServiceImpl) SendMessage(message string) error {
+func (s *ServiceImpl) SendMessage(message string) error {
 	fmt.Println(message)
 	msg := DingTalkMessage{
 		Msgtype: "text",
@@ -59,7 +59,7 @@ func (s *DingTalkServiceImpl) SendMessage(message string) error {
 	}
 
 	timestamp := time.Now().UnixMilli()
-	sign := calculateSignature(s.config.DingTalk.Secret, timestamp)
+	sign := CalculateSignature(s.config.DingTalk.Secret, timestamp)
 
 	webhookURL := fmt.Sprintf("%s&timestamp=%d&sign=%s", s.config.DingTalk.Webhook, timestamp, sign)
 
