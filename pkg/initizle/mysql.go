@@ -12,7 +12,7 @@ import (
 func DBInit(c config.Config) *gorm.DB {
 	var db *gorm.DB
 
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local",
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local&timeout=15s",
 		c.Database.Username, c.Database.Password, c.Database.Host, c.Database.Port, c.Database.Name,
 	)
 	var err error
