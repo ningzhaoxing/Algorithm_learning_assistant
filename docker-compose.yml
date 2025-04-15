@@ -14,7 +14,7 @@ services:
     networks:
       - app-network
     volumes:
-      - ./config.yaml:/app/configs/config.yaml
+      - ./config.yaml:/app/config.yaml
 
   mysql:
     image: mysql:8.0
