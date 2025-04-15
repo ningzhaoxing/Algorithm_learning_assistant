@@ -86,7 +86,6 @@ INSERT INTO `users` VALUES (10, NULL, NULL, NULL, '雪怡琦', 'familySix');
 -- ----------------------------
 -- Table structure for problems
 -- ----------------------------
-DROP TABLE IF EXISTS `problems`;
 CREATE TABLE `problems`  (
   `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
   `created_at` datetime(3) NULL DEFAULT NULL,

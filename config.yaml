@@ -1,7 +1,7 @@
 # 钉钉机器人配置
 dingtalk:
-  webhook: "https://oapi.dingtalk.com/robot/send?access_token=2d0adfdb37a9cd21673c6c8919a06cb2f4586bdcfcd1cb1b9e635ec24b9b53e4"
-  secret: "SEC85e9e8c1a8392c305d12e34e844dc9739a628ace5532659680043ffc5f8cf714"
+  webhook: "https://oapi.dingtalk.com/robot/send?access_token=f7eb9e4fd2a9c4db4f47b846b1173f586b2cdd1891b12a6a7d2ab74f55425446"
+  secret: "SECba0ca8dae89f45770b39256b5e7e69ba67bf1547909077fcb3ce6ef21b4770ee"
 
 # 数据库配置
 database:
