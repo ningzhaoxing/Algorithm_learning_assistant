@@ -23,7 +23,6 @@ func (r *RepositoryImpl) GetUsersByDepartment(dep string) ([]models.User, error)
 		fmt.Println(err)
 		return nil, err
 	}
-	fmt.Println(users[0].Problems[0])
 	return users, nil
 }
 
