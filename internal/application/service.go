@@ -5,6 +5,8 @@ import (
 	"getQuestionBot/internal/dao"
 	"getQuestionBot/internal/models"
 	"getQuestionBot/internal/service"
+	"getQuestionBot/pkg/utils"
+	"strconv"
 )
 
 type Service struct {
@@ -30,12 +32,14 @@ func (s *Service) Apply(obj string, websiteName string) {
 	// 数据库查询同学刷题网站
 	websites, err := s.UserRepo.GetUserAndWebsitesByDepartment(obj, websiteName)
 	if err != nil {
+		fmt.Println(err)
 		return
 	}
 
 	// 获取系统变量
 	system, err := s.SystemRepo.GetSystemConfigById(1)
 	if err != nil {
+		fmt.Println(err)
 		return
 	}
 
@@ -44,24 +48,35 @@ func (s *Service) Apply(obj string, websiteName string) {
 		// 获取静态资源
 		source, err := s.CrawlService.GetPageSource(website.UserURL)
 		if err != nil {
+			fmt.Println(err)
 			return
 		}
 
 		// 解析数据
 		user, err := s.MessageProcessService.GetProblemListByPageSource(source)
 		if err != nil {
+			fmt.Println(err)
 			return
+		}
+
+		// 计算当前解题周期
+		week := utils.CalCurWeek(system)
+		for i, _ := range user.Problems {
+			user.Problems[i].Week = strconv.Itoa(week)
+			user.Problems[i].Term = system.CurTerm
 		}
 
 		// 保存题目
 		err = s.UserRepo.SaveProblem(user.Problems, website.UserID)
 		if err != nil {
+			fmt.Println(err)
 			return
 		}
 
 		user.Name = website.User.Name
 		users = append(users, *user)
 	}
+	fmt.Println(111111)
 
 	// 组装消息
 	msg, err := s.MessageProcessService.MessageAssembly(users, system)
@@ -71,8 +86,8 @@ func (s *Service) Apply(obj string, websiteName string) {
 	fmt.Println(msg)
 
 	// 发送消息
-	//err = s.DingtalkService.SendMessage(msg)
-	//if err != nil {
-	//	return
-	//}
+	err = s.DingtalkService.SendMessage(msg)
+	if err != nil {
+		return
+	}
 }

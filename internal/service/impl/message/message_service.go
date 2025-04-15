@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"getQuestionBot/internal/models"
+	"getQuestionBot/pkg/utils"
 	"sort"
 	"strconv"
 	"strings"
@@ -99,10 +100,7 @@ func (s *ServiceImpl) GetProblemListByPageSource(body []byte) (*models.User, err
 // MessageAssembly 消息组装
 func (s *ServiceImpl) MessageAssembly(users []models.User, system models.System) (string, error) {
 	// 计算当前是第几周
-	semesterStart, _ := time.Parse("2006-01-02", system.SemesterStart)
-	currentTime := time.Now()
-	daysSinceStart := currentTime.Sub(semesterStart).Hours() / 24
-	weekNumber := int(daysSinceStart/7) + 1
+	weekNumber := utils.CalCurWeek(system)
 
 	var message strings.Builder
 	message.WriteString(fmt.Sprintf("💌【力扣刷题周报·第%d周】💌\n", weekNumber))
@@ -138,7 +136,7 @@ func (s *ServiceImpl) MessageAssembly(users []models.User, system models.System)
 
 	// 展示达标的用户
 	if len(aboveMinimum) > 0 {
-		message.WriteString("达标进度：\n")
+		message.WriteString("✨达标进度同学：\n")
 		for _, profile := range aboveMinimum {
 			message.WriteString(fmt.Sprintf("%s (本周解题数量：%d)\n", profile.Name, profile.SolvedNum))
 		}
@@ -146,7 +144,7 @@ func (s *ServiceImpl) MessageAssembly(users []models.User, system models.System)
 
 	// 如果有未达标的用户，单独展示
 	if len(belowMinimum) > 0 {
-		message.WriteString(fmt.Sprintf("⚠️ 未达到最低解题要求（%d题）的用户：\n", system.MinimumSolved))
+		message.WriteString(fmt.Sprintf("⚠️ 未达到最低解题要求（%d题）的同学：\n", system.MinimumSolved))
 		for _, profile := range belowMinimum {
 			message.WriteString(fmt.Sprintf("%s (本周解题数量：%d)\n", profile.Name, profile.SolvedNum))
 		}

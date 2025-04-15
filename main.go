@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"getQuestionBot/internal/application"
 	"getQuestionBot/internal/config"
+	"getQuestionBot/internal/controller"
 	systemRepo "getQuestionBot/internal/dao/system"
 	userRepo "getQuestionBot/internal/dao/user"
 	"getQuestionBot/internal/models"
@@ -38,8 +40,14 @@ func main() {
 	dingtalkImpl := dingtalk.NewServiceImpl(cfg)
 	messageImpl := message.NewServiceImpl()
 
+	controller.InitSrbInject(userRepo)
+
 	apply := application.NewService(userRepo, sysRepo, crawlImpl, dingtalkImpl, messageImpl)
 	apply.Apply("家族六期", "力扣")
-	// 保持程序运行
-	//select {}
+
+	e := initizle.RouterInit()
+	err = e.Run(fmt.Sprintf("%s:%d", cfg.App.Host, cfg.App.Port))
+	if err != nil {
+		return
+	}
 }

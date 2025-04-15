@@ -9,16 +9,9 @@ var path = "./config.yaml"
 
 // Config 应用配置结构
 type Config struct {
-	DingTalk    DingTalkConfig    `mapstructure:"dingtalk"`
-	LeetCode    LeetCodeConfig    `mapstructure:"message"`
-	DingMessage DingMessageConfig `mapstructure:"ding_message"`
-	Database    DatabaseConfig    `mapstructure:"database"`
-}
-
-// DingMessageConfig 钉钉消息配置
-type DingMessageConfig struct {
-	Header string `mapstructure:"header"`
-	Bottom string `mapstructure:"bottom"`
+	DingTalk DingTalkConfig `mapstructure:"dingtalk"`
+	Database DatabaseConfig `mapstructure:"database"`
+	App      AppConfig      `mapstructure:"app"`
 }
 
 type DatabaseConfig struct {
@@ -30,17 +23,16 @@ type DatabaseConfig struct {
 	Name     string `mapstructure:"name"`
 }
 
-// LeetCodeConfig LeetCode配置
-type LeetCodeConfig struct {
-	Users         []UserConfig `mapstructure:"user"`
-	SemesterStart string       `mapstructure:"semester_start"`
-	MinimumSolved int          `mapstructure:"minimum_solved"` // 最小解题数量要求
-}
-
 // UserConfig 用户配置
 type UserConfig struct {
 	URL  string `mapstructure:"url"`
 	Name string `mapstructure:"name"`
+}
+
+// AppConfig App配置
+type AppConfig struct {
+	Host string `mapstructure:"host"`
+	Port int    `mapstructure:"port"`
 }
 
 func LoadConfig() (*Config, error) {

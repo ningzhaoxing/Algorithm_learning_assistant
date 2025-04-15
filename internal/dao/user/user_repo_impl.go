@@ -17,12 +17,13 @@ func NewRepositoryImpl(db *gorm.DB) *RepositoryImpl {
 // GetUsersByDepartment 根据部门查询所有用户(包括用户关联表)
 func (r *RepositoryImpl) GetUsersByDepartment(dep string) ([]models.User, error) {
 	var users []models.User
-	if err := r.db.Where("department = ?", dep).
-		Preload("Websites").
+	if err := r.db.Model(&models.User{}).Where("department = ?", dep).
 		Preload("Problems").
 		Find(&users).Error; err != nil {
+		fmt.Println(err)
 		return nil, err
 	}
+	fmt.Println(users[0].Problems[0])
 	return users, nil
 }
 
@@ -48,11 +49,20 @@ func (r *RepositoryImpl) GetUserAndWebsitesByDepartment(dep string, websiteName 
 func (r *RepositoryImpl) SaveProblem(problems []models.Problem, uid uint) error {
 	err := r.db.Transaction(func(tx *gorm.DB) error {
 		for _, p := range problems {
-			fmt.Println(p)
 			p.UserID = uid
-			if err := r.db.Model(&models.Problem{}).Create(&p).Error; err != nil {
-				fmt.Println(err)
-				return err
+			var existing models.Problem
+			if err := r.db.Model(&models.Problem{}).Where("question_id = ?", p.QuestionId).First(&existing).Error; err == nil {
+				// 记录已存在，只更新sub_time
+				if err := r.db.Model(&models.Problem{}).Where("id = ?", existing.ID).Update("submit_time", p.SubmitTime).Error; err != nil {
+					fmt.Println(err)
+					return err
+				}
+			} else {
+				// 记录不存在，创建新记录
+				if err := r.db.Model(&models.Problem{}).Create(&p).Error; err != nil {
+					fmt.Println(err)
+					return err
+				}
 			}
 		}
 		return nil

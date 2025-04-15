@@ -12,26 +12,6 @@ database:
   password: "123456"
   name: "Algorithm_learning_assistant"
 
-# LeetCode用户配置
-leetcode:
-  users:
-    - url: "https://leetcode.cn/u/kan-fan-xing/"
-      name: "宁赵星"
-    - url: "https://leetcode.cn/u/xun_xun/"
-      name: "蒋睿勋"
-    - url: "https://leetcode.cn/u/zao-an-e/"
-      name: "雪怡琦"
-    - url: "https://leetcode.cn/u/gui-tu-960/"
-      name: "方腾飞"
-    - url: "https://leetcode.cn/u/ding-mao-s/"
-      name: "田家杰"
-    - url: "https://leetcode.cn/u/trusting-6rothendieckqgx/"
-      name: "贺丽帆"
-    - url: "https://leetcode.cn/u/6oofy-gangulyxsi/"
-      name: "韩硕博"
-    - url: "https://leetcode.cn/u/practical-snyderqvy/"
-      name: "王怡晗"
-    - url: "https://leetcode.cn/u/hardcore-swirlesrz0/"
-      name: "王玉龙"
-    - url: "https://leetcode.cn/u/festive-i2ubinwnk/"
-      name: "李壮"
+app:
+  host: "0.0.0.0"
+  port: 8080
