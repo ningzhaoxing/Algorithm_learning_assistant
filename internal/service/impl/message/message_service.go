@@ -69,6 +69,8 @@ func (s *ServiceImpl) GetProblemListByPageSource(body []byte) (*models.User, err
 					TitleSlug:       question["titleSlug"].(string),
 					QuestionId:      questionId,
 					SubmitTime:      submitTimeObj.Format("2006-01-02 15:04:05"),
+					Url:             fmt.Sprintf("https://leetcode.cn/problems/%s/description/", question["titleSlug"].(string)),
+					//Difficulty:      question["difficulty"].(string),
 				}
 			}
 		}
@@ -154,5 +156,6 @@ func (s *ServiceImpl) MessageAssembly(users []models.User, system models.System)
 	message.WriteString(system.DingBottom)
 
 	msg := strings.ReplaceAll(message.String(), "\\n", "\n")
+	fmt.Println(msg)
 	return msg, nil
 }

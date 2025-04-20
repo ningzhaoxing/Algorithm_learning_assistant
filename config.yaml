@@ -6,10 +6,10 @@ dingtalk:
 # 数据库配置
 database:
   driver: "mysql"
-  host: "mysql"
+  host: "localhost"
   port: 3306
-  username: "username"
-  password: "password"
+  username: "root"
+  password: "123456"
   name: "Algorithm_learning_assistant"
 
 app:

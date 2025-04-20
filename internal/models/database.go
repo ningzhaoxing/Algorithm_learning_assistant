@@ -34,6 +34,8 @@ type Problem struct {
 	Term            string `gorm:"not null"` // 学期
 	Week            string `gorm:"not null"` // 周数
 	UserID          uint   `gorm:"index"`    // 外键关联User表
+	Url             string `gorm:""`         // 题目url
+	Difficulty      string `gorm:""`         // 难度
 }
 
 // Website 刷题网站表
