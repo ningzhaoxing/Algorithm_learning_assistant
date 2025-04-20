@@ -53,7 +53,7 @@ func main() {
 	}
 	c := cron.New(cron.WithLocation(loc))
 
-	apply.Apply("家族六期", "力扣")
+	//apply.Apply("家族六期", "力扣")
 
 	// 添加定时任务（每周一8:30执行）
 	_, err = c.AddFunc("30 8 * * 1", func() {
