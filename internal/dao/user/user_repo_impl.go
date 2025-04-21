@@ -50,7 +50,7 @@ func (r *RepositoryImpl) SaveProblem(problems []models.Problem, uid uint) error 
 		for _, p := range problems {
 			p.UserID = uid
 			var existing models.Problem
-			if err := r.db.Model(&models.Problem{}).Where("question_id = ?", p.QuestionId).First(&existing).Error; err == nil {
+			if err := r.db.Model(&models.Problem{}).Where("question_id = ? AND user_id = ?", p.QuestionId, p.UserID).First(&existing).Error; err == nil {
 				// 记录已存在，只更新sub_time
 				if err := r.db.Model(&models.Problem{}).Where("id = ?", existing.ID).Update("submit_time", p.SubmitTime).Error; err != nil {
 					fmt.Println(err)

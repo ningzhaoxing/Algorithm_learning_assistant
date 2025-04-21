@@ -70,7 +70,6 @@ func (s *ServiceImpl) GetProblemListByPageSource(body []byte) (*models.User, err
 					QuestionId:      questionId,
 					SubmitTime:      submitTimeObj.Format("2006-01-02 15:04:05"),
 					Url:             fmt.Sprintf("https://leetcode.cn/problems/%s/description/", question["titleSlug"].(string)),
-					//Difficulty:      question["difficulty"].(string),
 				}
 			}
 		}
@@ -101,8 +100,11 @@ func (s *ServiceImpl) GetProblemListByPageSource(body []byte) (*models.User, err
 
 // MessageAssembly 消息组装
 func (s *ServiceImpl) MessageAssembly(users []models.User, system models.System) (string, error) {
-	// 计算当前是第几周
-	weekNumber := utils.CalCurWeek(system)
+	// 计算上一周是第几周
+	weekNumber := utils.CalCurWeek(system) - 1
+	if weekNumber < 0 {
+		weekNumber = 1
+	}
 
 	var message strings.Builder
 	message.WriteString(fmt.Sprintf("💌【力扣刷题周报·第%d周】💌\n", weekNumber))

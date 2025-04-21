@@ -47,13 +47,13 @@ func main() {
 	apply := application.NewService(userRepo, sysRepo, crawlImpl, dingtalkImpl, messageImpl)
 
 	// 初始化定时任务（放在路由初始化前）
-	loc, err := time.LoadLocation("Asia/Shanghai") // 使用时区
+	loc, err := time.LoadLocation("Asia/Shanghai")
 	if err != nil {
 		log.Fatalf("时区加载失败: %v", err)
 	}
 	c := cron.New(cron.WithLocation(loc))
 
-	//apply.Apply("家族六期", "力扣")
+	apply.Apply("家族六期", "力扣")
 
 	// 添加定时任务（每周一8:30执行）
 	_, err = c.AddFunc("30 8 * * 1", func() {
@@ -64,7 +64,7 @@ func main() {
 		log.Fatalf("创建定时任务失败: %v", err)
 	}
 	c.Start()
-	defer c.Stop() // 优雅关闭
+	defer c.Stop()
 
 	e := initizle.RouterInit()
 	err = e.Run(fmt.Sprintf("%s:%d", cfg.App.Host, cfg.App.Port))

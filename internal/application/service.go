@@ -60,7 +60,7 @@ func (s *Service) Apply(obj string, websiteName string) {
 		}
 
 		// 计算当前解题周期
-		week := utils.CalCurWeek(system)
+		week := utils.CalCurWeek(system) - 1
 		for i, _ := range user.Problems {
 			user.Problems[i].Week = strconv.Itoa(week)
 			user.Problems[i].Term = system.CurTerm
