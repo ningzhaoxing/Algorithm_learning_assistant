@@ -1,12 +1,12 @@
 # 钉钉机器人配置
 dingtalk:
-  webhook: ""
-  secret: ""
+  webhook: "https://oapi.dingtalk.com/robot/send?access_token=f7eb9e4fd2a9c4db4f47b846b1173f586b2cdd1891b12a6a7d2ab74f55425446"
+  secret: "SECba0ca8dae89f45770b39256b5e7e69ba67bf1547909077fcb3ce6ef21b4770ee"
 
 # 数据库配置
 database:
   driver: "mysql"
-  host: "localhost"
+  host: "mysql"
   port: 3306
   username: "root"
   password: "123456"

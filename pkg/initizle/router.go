@@ -26,6 +26,8 @@ func RouterInit() *gin.Engine {
 		user := api.Group("/user")
 		{
 			user.GET("/list", controller.APIs.UserSrv.ListUsers)
+			user.GET("/register")
+			user.POST("/register", controller.APIs.UserSrv.Register)
 		}
 
 		// 问题相关路由

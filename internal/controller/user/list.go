@@ -1,18 +1,9 @@
 package user
 
 import (
-	"getQuestionBot/internal/dao"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
-
-type EndpointCtl struct {
-	UserRepo dao.UserRepo
-}
-
-func NewUserController(userRepo dao.UserRepo) *EndpointCtl {
-	return &EndpointCtl{UserRepo: userRepo}
-}
 
 func (c *EndpointCtl) ListUsers(ctx *gin.Context) {
 	// 获取部门参数，默认为空字符串获取所有用户

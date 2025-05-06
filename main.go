@@ -2,11 +2,14 @@ package main
 
 import (
 	"fmt"
-	"getQuestionBot/internal/application"
+	"getQuestionBot/internal/application/messagePush"
+	"getQuestionBot/internal/application/user"
 	"getQuestionBot/internal/config"
 	"getQuestionBot/internal/controller"
+	"getQuestionBot/internal/dao/problem"
 	systemRepo "getQuestionBot/internal/dao/system"
 	userRepo "getQuestionBot/internal/dao/user"
+	"getQuestionBot/internal/dao/website"
 	"getQuestionBot/internal/models"
 	"getQuestionBot/internal/service/impl/crawl"
 	"getQuestionBot/internal/service/impl/dingtalk"
@@ -37,14 +40,18 @@ func main() {
 	// 依赖注入
 	userRepo := userRepo.NewRepositoryImpl(db)
 	sysRepo := systemRepo.NewRepositoryImpl(db)
+	proRepo := problem.NewRepositoryImpl(db)
+	websiteRepo := website.NewRepositoryImpl(db)
 
 	crawlImpl := crawl.NewServiceImpl()
 	dingtalkImpl := dingtalk.NewServiceImpl(cfg)
 	messageImpl := message.NewServiceImpl()
 
-	controller.InitSrbInject(userRepo)
+	userServiceImpl := user.NewRegister(userRepo)
 
-	apply := application.NewService(userRepo, sysRepo, crawlImpl, dingtalkImpl, messageImpl)
+	controller.InitSrbInject(userRepo, userServiceImpl, websiteRepo)
+
+	apply := messagePush.NewService(userRepo, sysRepo, crawlImpl, dingtalkImpl, messageImpl, proRepo)
 
 	// 初始化定时任务（放在路由初始化前）
 	loc, err := time.LoadLocation("Asia/Shanghai")

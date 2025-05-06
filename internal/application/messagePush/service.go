@@ -1,4 +1,4 @@
-package application
+package messagePush
 
 import (
 	"fmt"
@@ -15,15 +15,17 @@ type Service struct {
 	service.MessageProcessService
 	dao.UserRepo
 	dao.SystemRepo
+	dao.ProblemRepo
 }
 
-func NewService(userRepo dao.UserRepo, sysRepo dao.SystemRepo, craw service.CrawlService, ding service.DingtalkService, msg service.MessageProcessService) *Service {
+func NewService(userRepo dao.UserRepo, sysRepo dao.SystemRepo, craw service.CrawlService, ding service.DingtalkService, msg service.MessageProcessService, problem dao.ProblemRepo) *Service {
 	return &Service{
 		CrawlService:          craw,
 		DingtalkService:       ding,
 		MessageProcessService: msg,
 		UserRepo:              userRepo,
 		SystemRepo:            sysRepo,
+		ProblemRepo:           problem,
 	}
 }
 
@@ -67,7 +69,7 @@ func (s *Service) Apply(obj string, websiteName string) {
 		}
 
 		// 保存题目
-		err = s.UserRepo.SaveProblem(user.Problems, website.UserID)
+		err = s.ProblemRepo.SaveProblem(user.Problems, website.UserID)
 		if err != nil {
 			fmt.Println(err)
 			return

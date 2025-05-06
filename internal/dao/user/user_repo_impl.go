@@ -44,31 +44,18 @@ func (r *RepositoryImpl) GetUserAndWebsitesByDepartment(dep string, websiteName 
 	return websites, nil
 }
 
-// SaveProblem 将为id用户第term学期，第week周的解题列表存入到数据库
-func (r *RepositoryImpl) SaveProblem(problems []models.Problem, uid uint) error {
-	err := r.db.Transaction(func(tx *gorm.DB) error {
-		for _, p := range problems {
-			p.UserID = uid
-			var existing models.Problem
-			if err := r.db.Model(&models.Problem{}).Where("question_id = ? AND user_id = ?", p.QuestionId, p.UserID).First(&existing).Error; err == nil {
-				// 记录已存在，只更新sub_time
-				if err := r.db.Model(&models.Problem{}).Where("id = ?", existing.ID).Update("submit_time", p.SubmitTime).Error; err != nil {
-					fmt.Println(err)
-					return err
-				}
-			} else {
-				// 记录不存在，创建新记录
-				if err := r.db.Model(&models.Problem{}).Create(&p).Error; err != nil {
-					fmt.Println(err)
-					return err
-				}
-			}
-		}
-		return nil
-	})
-	if err != nil {
-		return err
+// AddUser 新增用户
+func (r *RepositoryImpl) AddUser(user models.User) (uint, error) {
+	if err := r.db.Create(&user).Error; err != nil {
+		return 0, fmt.Errorf("添加用户失败: %w", err)
 	}
+	return user.ID, nil
+}
 
+// AddUserWebsite 新增用户关联网站
+func (r *RepositoryImpl) AddUserWebsite(userWebsite models.UserWebsite) error {
+	if err := r.db.Create(&userWebsite).Error; err != nil {
+		return fmt.Errorf("添加用户关联网站失败: %w", err)
+	}
 	return nil
 }

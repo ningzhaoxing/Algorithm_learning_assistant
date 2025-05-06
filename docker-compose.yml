@@ -30,7 +30,7 @@ services:
 #      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - app-network
-    command: "--character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --init-file " # /docker-entrypoint-initdb.d/init.sql
+    command: "--character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci" # --init-file /docker-entrypoint-initdb.d/init.sql
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$$MYSQL_ROOT_PASSWORD"]
       interval: 5s

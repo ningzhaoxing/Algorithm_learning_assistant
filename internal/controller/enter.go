@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"getQuestionBot/internal/application/user"
 	userCtl "getQuestionBot/internal/controller/user"
 	"getQuestionBot/internal/dao"
 )
@@ -11,8 +12,8 @@ type apiGroup struct {
 
 var APIs *apiGroup
 
-func InitSrbInject(userRepo dao.UserRepo) {
+func InitSrbInject(userRepo dao.UserRepo, userService user.Service, websiteRepo dao.WebsiteRepo) {
 	APIs = &apiGroup{
-		UserSrv: userCtl.EndpointCtl{UserRepo: userRepo},
+		UserSrv: *userCtl.NewUserController(userRepo, websiteRepo, userService),
 	}
 }
